@@ -23,6 +23,10 @@ ins.execute({'name': "Tom", 'age': 33, 'password': "hungryhippo"},
     {'name': "Zack", 'age': 14, 'password': "executables"},
     )
 
+name = raw_input("Name:")
+age = raw_input("Age:")
+password = raw_input("Password")
+
 sel = users2.select()
 rs = sel.execute()
 
@@ -31,6 +35,8 @@ print 'ID:', row[0] # can also be row.uder_id
 print 'Name:', row.name # can also be row[1]
 print 'Age:', row.age # can also be row[2]
 print 'password:', row.password
+
+ins.execute(name = name, age = age, password = password
 
 for row in rs:
     print "%r is %r years old!" % (row.name, row.age)
