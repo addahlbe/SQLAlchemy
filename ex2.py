@@ -14,7 +14,7 @@ users2 = Table('users2', metadata,
     Column('age', Integer),
     Column('password', String),
     )
-#users2.create()
+#users2.create() database is already created. 
 ins = users2.insert()
 ins.execute(name = "Tony", age = 21, password = "monkmonk12")
 ins.execute({'name': "Tom", 'age': 33, 'password': "hungryhippo"},
@@ -25,7 +25,8 @@ ins.execute({'name': "Tom", 'age': 33, 'password': "hungryhippo"},
 
 name = raw_input("Name:")
 age = raw_input("Age:")
-password = raw_input("Password")
+password = raw_input("Password:")
+ins.execute(name = name, age = age, password = password)
 
 sel = users2.select()
 rs = sel.execute()
@@ -36,7 +37,23 @@ print 'Name:', row.name # can also be row[1]
 print 'Age:', row.age # can also be row[2]
 print 'password:', row.password
 
-ins.execute(name = name, age = age, password = password
-
 for row in rs:
     print "%r is %r years old!" % (row.name, row.age)
+
+def run(stmt):
+    rs = stmt.execute()
+    for row in rs:
+        print row
+
+# s = users2.select(users2.c.name == 'Tina')
+# run(s)
+# s = users2.select(users2.c.age < 40)
+# run(s)
+
+# Python keywords like and or and not can't be overloaded, so SQLAlchemy uses functions instead
+s = user.select(and_(users2.c.age < 40, users.c.name != 'Ralf'))
+run(s)
+
+# or you can use and -and- or but watch out for priority
+s = user.select((users2.c.name == 'Tony') & (users2.c.age == 21))
+run(s)
